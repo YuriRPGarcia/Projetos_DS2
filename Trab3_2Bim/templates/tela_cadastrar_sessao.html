@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu</title>
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper #424242 grey darken-3">
+      <a href="#" class="brand-logo">Cinema</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/gerenciar_filmes">Gerenciar Filmes</a></li>
+        <li><a href="/gerenciar_sessoes">Gerenciar Sessões</a></li>
+        <li><a href="/gerenciar_ingressos">Gerenciar Ingressos</a></li>
+      </ul>
+    </div>
+    </nav>
+    <div class="row">
+      <form class="col s12" action="/cadastrar_sessao" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" class="datepicker" id="dia" name="dia">
+                <label for="dia">Data da Sessão</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+              <input type="text" class="timepicker" id="hora" name="hora">
+              <label for="hora">Horário da Sessão</label>
+            </div>
+        </div>
+        <input type="hidden" name="codFilme" value="{{filme.cod}}">
+        <button class="btn waves-effect waves-light" type="submit">Cadastrar</button>
+      </form>
+    </div>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> 
+  <script src="../static/app.js"></script>
+  <!-- Materialize JS -->
+  <script src="../static/materialize/js/materialize.js"></script>
+</body>
+</html>
