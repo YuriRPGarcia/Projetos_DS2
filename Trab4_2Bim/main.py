@@ -8,7 +8,7 @@ app.config['UPLOAD_FOLDER'] = 'static/fotos/'
 app.secret_key = "chave_secreta"
 
 @app.after_request
-def add_header(r):
+def depois_da_rota(r):
     """
     Add headers to both force latest IE rendering engine or Chrome Frame,
     and also to cache the rendered page for 10 minutes.
@@ -198,12 +198,12 @@ def altera_aluno():
 
 		if (extensao == 'png' or extensao == 'jpg' or extensao == 'jpeg'):
 
-			f.save(app.config['UPLOAD_FOLDER'] + str(session['login']) + "." + extensao)
+			f.save(app.config['UPLOAD_FOLDER'] + str(request.form['matricula']) + "." + extensao)
 
-			aluno.foto = str(session['login']) + "." + extensao
+			aluno.foto = str(request.form['matricula']) + "." + extensao
 
 		else:
-			return render_template("tela_alterar_aluno.html", mensagem = "formato de imagem nao suportado.")
+			return render_template("tela_alterar_aluno.html", aluno = aluno, mensagem = "formato de imagem nao suportado.")
 
 	alunoDAO.editar(aluno)
 
@@ -302,8 +302,8 @@ def altera_empresa():
 		f = request.files['logo']		
 		extensao = f.filename.rsplit('.', 1)[1].lower()
 		if (extensao == 'png' or extensao == 'jpg' or extensao == 'jpeg'):
-			f.save(app.config['UPLOAD_FOLDER'] + str(session['login']) + "." + extensao)
-			empresa.logo = str(session['login']) + "." + extensao		
+			f.save(app.config['UPLOAD_FOLDER'] + str(request.form['cnpj']) + "." + extensao)
+			empresa.logo = str(request.form['cnpj']) + "." + extensao		
 			empresaDAO.editar(empresa)
 		else:
 			return render_template("tela_alterar_empresa.html", empresa = empresa, mensagem = "formato de imagem nao suportado.")
@@ -396,7 +396,5 @@ def excluir_estagio(cod):
 		return redirect(url_for("index"))
 
 if __name__ == '__main__':
-	reload(sys)
-	sys.setdefaultencoding('UTF-8')
 	app.run(debug=True)
 			
