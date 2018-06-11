@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} Administrador {% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col s4 m4">
+      <div class="card black">
+        <div class="card-content white-text">
+          <span class="card-title">Alunos</span>
+          <p>Liste, edite e exclua alunos.</p>
+        </div>
+        <div class="card-action">
+          <a href="/gerencia_alunos" style="color: lightseagreen">Gerencie Alunos</a>
+        </div>
+      </div>
+    </div>
+    <div class="col s4 m4">
+      <div class="card black">
+        <div class="card-content white-text">
+          <span class="card-title">Empresas</span>
+          <p>Liste, edite e exclua empresas.</p>
+        </div>
+        <div class="card-action">
+          <a href="/gerencia_empresas" style="color: lightseagreen">Gerencie Empresas</a>
+        </div>
+      </div>
+    </div>
+    <div class="col s4 m4">
+      <div class="card black">
+        <div class="card-content white-text">
+          <span class="card-title">Estágio</span>
+          <p>Liste, edite e exclua estágios.</p>
+        </div>
+        <div class="card-action">
+          <a href="/gerencia_estagios" style="color: lightseagreen">Gerencie Estágios</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

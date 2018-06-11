@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block title %} Alunos {% endblock %}
+
+{% block content %}
+
+<blockquote><h5>Lista de Alunos</h5><a class="waves-effect waves-light btn-small" onclick="window.location.href='/tela_cadastrar_aluno'">Novo</a></blockquote>
+
+<ul class="collection">
+	{% for a in vetAlunos%}
+	    <li class="collection-item avatar">
+	      <img src="../static/fotos/{{a.foto}}" alt="" class="circle">
+	      <span class="title">{{a.nome}}</span>
+	      <p>{{a.matricula}}</p>
+	      <a href="/tela_alterar_aluno/{{a.matricula}}" style="color: lightseagreen">Editar</a>
+	      <a href="/excluir_aluno/{{a.matricula}}" style="color: lightseagreen">Excluir</a>
+	    </li>
+	{% endfor %}
+</ul>
+
+
+{% endblock %}

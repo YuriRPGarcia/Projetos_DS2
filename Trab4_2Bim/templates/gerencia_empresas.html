@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block title %} Empresas {% endblock %}
+
+{% block content %}
+
+<blockquote><h5>Lista de Empresas</h5><a class="waves-effect waves-light btn-small" onclick="window.location.href='/tela_cadastrar_empresa'">Novo</a></blockquote>
+
+<ul class="collection">
+	{% for a in vetEmpresas%}
+	    <li class="collection-item avatar">
+	      <img src="../static/fotos/{{a.logo}}" alt="" class="circle">
+	      <span class="title">{{a.nome}}</span>
+	      <p>{{a.cnpj}}</p>
+	      <a href="/tela_alterar_empresa/{{a.cnpj}}" style="color: lightseagreen">Editar</a>
+	      <a href="/excluir_empresa/{{a.cnpj}}" style="color: lightseagreen">Excluir</a>
+	    </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

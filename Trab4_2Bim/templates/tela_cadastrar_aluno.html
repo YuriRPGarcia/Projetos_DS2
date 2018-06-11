@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+
+{% block title %} Cadastrar Aluno {% endblock %}
+
+
+{% block content %}
+
+<blockquote><h4>Cadastre-se, Aluno</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/cadastrar_aluno" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="matricula" type="text" name="matricula" required>
+              <label for="matricula">Insira Sua Matrícula</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input id="nome" type="text" name="nome" required>
+              <label for="nome">Insira Seu Nome</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="senha" type="password" name="senha" required>
+              <label for="senha">Insira Sua Senha</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Escolha sua Foto</span>
+                    <input type="file" id="foto" name="foto">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" onclick="return validaAluno(this)">Cadastrar</button>
+        </form>
+    </div>
+    <blockquote>
+      {{mensagem}}
+    </blockquote>
+
+{% endblock %}

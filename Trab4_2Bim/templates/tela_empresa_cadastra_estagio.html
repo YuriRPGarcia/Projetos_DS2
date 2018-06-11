@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block title %} Cadastrar Estágio {% endblock %}
+
+
+{% block content %}
+
+<blockquote><h4>Cadastre seu Estágio</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/empresa_cadastra_estagio" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" class="datepicker" id="dataInicio" name="dataInicio">
+                <label for="dataInicio">Data em que o Estágio começou ou irá começar</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" class="datepicker" id="dataFim" name="dataFim">
+                <label for="dataFim">Data em que o Estágio terminou ou irá terminar</label>
+            </div>
+        </div>
+        <div class="row">
+           <div class="input-field col s12">
+              <select name="aluno">
+                <option value="" disabled selected>Escolha o Aluno</option>
+                {% for a in vetAlunos%}
+                  <option value="{{a.matricula}}">{{a.nome}}. {{a.matricula}}</option>
+                {% endfor %}
+              </select>
+              <label>Materialize Select</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit">Cadastrar Estagio</button>
+        </form>
+    </div>
+
+{% endblock %}

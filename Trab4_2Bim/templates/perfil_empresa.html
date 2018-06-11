@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+	<div class="col s12 m7">
+	    <div class="card horizontal">
+	      <div class="card-image">
+	        <img src="../static/fotos/{{empresa.logo}}">
+	      </div>
+	      <div class="card-stacked">
+	        <div class="card-content">
+	        	<span class="card-title">{{empresa.nome}}</span>
+	        	<br>
+	          	<p>CNPJ: {{empresa.cnpj}}</p>
+	          	<br>
+	        <div class="card-action">
+	        	<a href="/tela_empresa_cadastra_estagio" style="color: lightseagreen">Cadastre um Estágio</a>
+	        </div>
+	        <div class="card-action">
+	        	<a href="/tela_alterar_empresa/{{empresa.cnpj}}" style="color: lightseagreen">Edite suas Informações</a>
+	        </div>
+	        <div class="card-action">
+	        	<a href="/excluir_empresa/{{empresa.cnpj}}" style="color: lightseagreen">Excluir Conta</a>
+	        </div>
+	        </div>
+	      </div>
+	    </div>
+  	</div>
+
+  	<blockquote><h5>Estágios</h5></blockquote>
+
+	<ul class="collection">
+	    {% for a in vetEstagios%}
+	    <li class="collection-item avatar">
+	      <img src="../static/fotos/{{a.aluno.foto}}" alt="" class="circle">
+	      <span class="title">{{a.aluno.nome}}</span>
+	      <p>
+	        Começou ou irá começar em: {{a.dataInicio}} <br> 
+	        Termina ou terminou em: {{a.dataFim}}
+	      </p>
+	      <a href="/tela_altera_estagio/{{a.cod}}" style="color: lightseagreen">Editar</a>
+	      <a href="/excluir_estagio/{{a.cod}}" style="color: lightseagreen">Excluir</a>
+	    </li>
+	    {% endfor %}
+	</ul>
+
+{% endblock %}

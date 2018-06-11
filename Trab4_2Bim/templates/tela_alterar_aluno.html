@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+{% block title %} Editar Aluno {% endblock %}
+
+
+{% block content %}
+
+<blockquote><h4>Edite sua Conta</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/altera_aluno" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s6">
+              <input id="nome" type="text" name="nome" value="{{aluno.nome}}" required>
+              <label for="nome">Novo nome</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="senha" type="password" name="senha" value="{{aluno.senha}}" required>
+              <label for="senha">Nova senha</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Nova Foto</span>
+                    <input type="file" id="foto" name="foto">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="matricula" value="{{aluno.matricula}}">
+        <button class="btn waves-effect waves-light" onclick="return validaAluno(this)" type="submit">Editar</button>
+        </form>
+    </div>
+    <blockquote>
+      {{mensagem}}
+    </blockquote>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block title %} Editar Estágio {% endblock %}
+
+
+{% block content %}
+
+<blockquote><h4>Edite seu Estágio</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/altera_estagio" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" class="datepicker" id="dataInicio" name="dataInicio" value="{{estagio.dataInicio}}">
+                <label for="dataInicio">Nova Data em que o Estágio começou ou irá começar</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" class="datepicker" id="dataFim" name="dataFim" value="{{estagio.dataFim}}">
+                <label for="dataFim">Nova Data em que o Estágio terminou ou irá terminar</label>
+            </div>
+        </div>
+        <input type="hidden" name="cod" value="{{estagio.cod}}">
+        <button class="btn waves-effect waves-light" type="submit">Editar Estagio</button>
+        </form>
+    </div>
+
+{% endblock %}

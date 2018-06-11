@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Estágios {% endblock %}
+
+{% block content %}
+
+<blockquote><h5>Lista de Estágios</h5><a class="waves-effect waves-light btn-small" onclick="window.location.href='/tela_admin_cadastra_estagio'">Novo</a></blockquote>
+
+<ul class="collection">
+	{% for a in vetEstagios%}
+	    <li class="collection-item avatar">
+	      <img src="../static/fotos/{{a.empresa.logo}}" alt="" class="circle">
+	      <span class="title">{{a.empresa.nome}}, {{a.empresa.cnpj}}</span><br>
+	      <span class="title">{{a.aluno.nome}}, {{a.aluno.matricula}}</span>
+	      <p>{{a.dataInicio}}<br>
+	      	 {{a.dataFim}}
+	      </p>
+	      <a href="/tela_altera_estagio/{{a.cod}}" style="color: lightseagreen">Editar</a>
+	      <a href="/excluir_estagio/{{a.cod}}" style="color: lightseagreen">Excluir</a>
+	    </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

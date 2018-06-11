@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} Página Inicial {% endblock %}
+
+{% block content %}
+
+	<div class="row">
+    <div class="col s6 m6">
+      <div class="card black">
+        <div class="card-content white-text">
+          <span class="card-title">Se Você é Aluno</span>
+          <p>Todos tem que que começar de algum lugar mesmo que seja com um salário que não paga nem o salgado, muito menos uma vida com dignidade.</p>
+        </div>
+        <div class="card-action">
+          <a href="/tela_cadastrar_aluno" style="color: lightseagreen">Cadastre-se</a>
+        </div>
+      </div>
+    </div>
+    <div class="col s6 m6">
+      <div class="card black">
+        <div class="card-content white-text">
+          <span class="card-title">Se você tem uma Empresa</span>
+          <p>Se a sua empresa precisa de estagiários a escravidão acabou a muito tempo, pelo menos no Brasil. Se você mudar sua empresa para Blangadesh talvez consiga.</p>
+        </div>
+        <div class="card-action">
+          <a href="/tela_cadastrar_empresa" style="color: lightseagreen">Cadastre sua Empresa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

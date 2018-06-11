@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block title %} Login {% endblock %}
+
+
+{% block content %}
+<blockquote><h4>Faça seu Login</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/logar" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="login" type="text" name="login">
+              <label for="login">Insira Sua Matrícula(Aluno) ou CNPJ(Empresa)</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="senha" type="password" name="senha">
+              <label for="senha">Insira Sua Senha</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit">Fazer Login</button>
+        </form>
+    </div>
+    <blockquote>
+      {{mensagem}}
+    </blockquote>
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+
+{% block title %} Cadastrar Empresa {% endblock %}
+
+
+{% block content %}
+
+<blockquote><h4>Cadastre-se, Empresa</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/cadastrar_empresa" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="cnpj" type="text" name="cnpj" required>
+              <label for="cnpk">Insira o CNPJ da Empresa</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input id="nome" type="text" name="nome" required>
+              <label for="nome">Insira o Nome da Empresa</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="senha" type="password" name="senha" required>
+              <label for="senha">Insira Sua Senha</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Escolha sua Logo</span>
+                    <input type="file" id="logo" name="logo">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" onclick="return validaEmpresa(this)" type="submit">Cadastrar</button>
+        </form>
+    </div>
+    <blockquote>
+      {{mensagem}}
+    </blockquote>
+
+{% endblock %}

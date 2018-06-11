@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <style type="text/css">
+        html, body {
+          height: 100%;
+        }
+        body {
+          display: flex;
+          flex-direction: column;
+        }
+        #nonFooter {
+          flex: 1 0 auto;
+        }
+        #footer {
+          flex-shrink: 0;
+        }
+        blockquote{
+            border-left: 5px solid #26a69a;
+        }
+    </style>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> 
+    <!-- Materialize JS -->
+    <script src="../static/materialize/js/materialize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <script>
+        function validaEmpresa(frm) {
+            
+            if (isNaN(this.cnpj.value)) {
+            alert("digite apenas numeros!");
+            this.cnpj.select();
+            return false;
+            }
+            else{
+                c = this.cnpj.value;
+            }
+            if (c.toString().length != 14) {
+            alert("o cnpj tem de ter 14 numeros!");
+            this.cnpj.select();
+            return false;
+            }
+            n = this.nome.value;
+            if (n.toString().length > 100) {
+              alert("O nome é muito grande");
+              this.nome.select();
+              return false;
+            }
+            s = this.senha.value;
+            if (s.toString().length > 100) {
+              alert("A senha é muito grande");
+              this.senha.select();
+              return false;
+            }
+            l = this.logo.value;
+            if (l.toString().length > 100) {
+              alert("O nome do arquivo é muito grande");
+              this.foto.select();
+              return false;
+            }
+
+        }
+
+        function validaAluno(frm) {
+            if (isNaN(this.matricula.value)) {
+            alert("digite apenas numeros!");
+            this.matricula.select();
+            return false;
+            }
+            else{
+                mat = this.matricula.value;
+            }
+            if (mat.toString().length != 8) {
+            alert("a matricula tem de ter 8 numeros!");
+            this.matricula.select();
+            return false;
+            }
+            n = this.nome.value;
+            if (n.toString().length > 100) {
+              alert("O nome é muito grande");
+              this.nome.select();
+              return false;
+            }
+            s = this.senha.value;
+            if (s.toString().length > 100) {
+              alert("A senha é muito grande");
+              this.senha.select();
+              return false;
+            }
+            f = this.foto.value;
+            if (f.toString().length > 100) {
+              alert("O nome do arquivo é muito grande");
+              this.foto.select();
+              return false;
+            }
+        }
+
+        $(document).ready(function(){
+            $('.datepicker').datepicker(); 
+        });
+
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+    </script>
+    <title>
+        {% block title %}
+
+        {% endblock %} 
+    </title>
+    {% endblock %}
+</head>
+<body>
+    <div id="nonFooter">
+
+    <div id="header">
+        <nav>
+            <div class="nav-wrapper black">
+                <a href="/" class="brand-logo">COREinho</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/tela_login">Login</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/redireciona_perfil">Perfil</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+
+    </div>
+    
+    <div id="footer">
+        <footer class="page-footer black">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Ninguém se importa com o rodapé</h5>
+                <p class="grey-text text-lighten-4">O rodapé é o Tom Bombadil da página web.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="/">Página Inicial</a></li>                  
+                  <li><a class="grey-text text-lighten-3" href="/tela_login">Login</a></li>
+                  <li><a class="grey-text text-lighten-3" href="/tela_cadastrar_aluno">Cadastre um Aluno</a></li>
+                  <li><a class="grey-text text-lighten-3" href="/tela_cadastrar_empresa">Cadastre uma Empresa</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © Copyright de cu é rola
+            </div>
+          </div>
+        </footer>       
+    </div>
+</body>
+</html>
