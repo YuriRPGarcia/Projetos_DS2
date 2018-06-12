@@ -3,109 +3,14 @@
 <head>
     {% block head %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <style type="text/css">
-        html, body {
-          height: 100%;
-        }
-        body {
-          display: flex;
-          flex-direction: column;
-        }
-        #nonFooter {
-          flex: 1 0 auto;
-        }
-        #footer {
-          flex-shrink: 0;
-        }
-        blockquote{
-            border-left: 5px solid #26a69a;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> 
     <!-- Materialize JS -->
     <script src="../static/materialize/js/materialize.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 
-    <script>
-        function validaEmpresa(frm) {
-            
-            if (isNaN(this.cnpj.value)) {
-            alert("digite apenas numeros!");
-            this.cnpj.select();
-            return false;
-            }
-            else{
-                c = this.cnpj.value;
-            }
-            if (c.toString().length != 14) {
-            alert("o cnpj tem de ter 14 numeros!");
-            this.cnpj.select();
-            return false;
-            }
-            n = this.nome.value;
-            if (n.toString().length > 100) {
-              alert("O nome é muito grande");
-              this.nome.select();
-              return false;
-            }
-            s = this.senha.value;
-            if (s.toString().length > 100) {
-              alert("A senha é muito grande");
-              this.senha.select();
-              return false;
-            }
-            l = this.logo.value;
-            if (l.toString().length > 100) {
-              alert("O nome do arquivo é muito grande");
-              this.foto.select();
-              return false;
-            }
-
-        }
-
-        function validaAluno(frm) {
-            if (isNaN(this.matricula.value)) {
-            alert("digite apenas numeros!");
-            this.matricula.select();
-            return false;
-            }
-            else{
-                mat = this.matricula.value;
-            }
-            if (mat.toString().length != 8) {
-            alert("a matricula tem de ter 8 numeros!");
-            this.matricula.select();
-            return false;
-            }
-            n = this.nome.value;
-            if (n.toString().length > 100) {
-              alert("O nome é muito grande");
-              this.nome.select();
-              return false;
-            }
-            s = this.senha.value;
-            if (s.toString().length > 100) {
-              alert("A senha é muito grande");
-              this.senha.select();
-              return false;
-            }
-            f = this.foto.value;
-            if (f.toString().length > 100) {
-              alert("O nome do arquivo é muito grande");
-              this.foto.select();
-              return false;
-            }
-        }
-
-        $(document).ready(function(){
-            $('.datepicker').datepicker(); 
-        });
-
-        $(document).ready(function(){
-            $('select').formSelect();
-        });
-    </script>
+    <script src="../static/js.js"></script>
     <title>
         {% block title %}
 
