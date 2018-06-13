@@ -7,7 +7,7 @@ class Assunto:
 		return self.id + ";" + self.nome
 
 class Noticia:
-	def __init__(self, titulo = "", texto = "", data = "", assunto = Assunto(), id = 0):
+	def __init__(self, titulo = "", texto = "", data = "", foto = "", assunto = Assunto(), id = 0):
 		self.titulo = titulo
 		self.texto = texto
 		self.data = data
@@ -18,12 +18,22 @@ class Noticia:
 		return self.id + ";" + self.titulo + ";" + self.texto + ";" + self.data + ";" + self.assunto
 
 class Comentario:
-	def __init__(self, texto = "", data = "", noticia = Noticia(), leitor = Leitor(), id = 0)
+	def __init__(self, texto = "", data = "", noticia = Noticia(), pessoa = Pessoa("leitor"), id = 0)
 		self.texto = texto
 		self.data = data
 		self.noticia = noticia
-		self.leitor = leitor
+		self.pessoa = pessoa
 		self.id = id
 
 	def __repr__(self)
-		return self.id + ";" + self.texto + ";" + self.data + ";" + self.noticia + ";" + self.leitor
+		return self.id + ";" + self.texto + ";" + self.data + ";" + self.noticia + ";" + self.pessoa
+
+class Pessoa:
+	def __init__(self, tipo = "", login = "", senha = "", nome = "")
+		self.tipo = tipo
+		self.login = login
+		self.senha = senha
+		self.nome = nome
+
+	def __repr__(self)
+		return self.tipo + ";" + self.login + ";" + self.senha + ";" + self.nome
