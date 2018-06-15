@@ -1,4 +1,8 @@
-{% extends "base.html" %}
+{% if session['tipo'] == 'leitor' or 'tipo' not in session %}
+  {% extends "base.html" %}
+{% else %}
+  {% extends "base_administracao.html" %}
+{% endif %}
 
 {% block title %} Home {% endblock %}
 
@@ -28,7 +32,7 @@
            	<span id='message'></span>
         </blockquote>
         <input type="hidden" name="login" value="{{pessoa.login}}">
-        <button class="btn waves-effect waves-light" type="submit">Editar</button>
+        <button class="btn waves-effect waves-light" onclick="return validaPessoa(this)" type="submit">Editar</button>
     </form>
 </div>
 <blockquote>

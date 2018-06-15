@@ -1,4 +1,8 @@
-{% extends "base.html" %}
+{% if session['tipo'] == 'leitor' or 'tipo' not in session %}
+	{% extends "base.html" %}
+{% else %}
+	{% extends "base_administracao.html" %}
+{% endif %}
 
 {% block title %} Notícia {% endblock %}
 
@@ -23,8 +27,25 @@
 			    <li class="collection-item avatar">
 				    <i class="material-icons circle black">account_circle</i>
 				    <span class="title">@{{a.pessoa.login}}</span>
-				    <p>{{a.pessoa.nome}}<br>
+				    <p>{{a.pessoa.nome}}
+	        		<br>
 				    {{a.texto}}
+				    {% if 'admin' in session['tipo'] or 'jornalista' in session['tipo'] or session['login'] == a.pessoa.login %}
+					    <div class="card-action">    
+					        <a href="/excluir_comentario/{{a.id}}">Excluir Comentário</a>
+					        <a class="waves-effect waves-light btn" id="mostraForm" name="mostraForm"><i class="material-icons">edit</i></a>
+					        <form action="/editar_comentario/{{a.id}}" method="post" enctype="multipart/form-data" name="formAssunto" id="formAssunto" style="display:none;">
+								<div class="row">
+							        <div class="input-field col s12">
+							       		<textarea id="texto" name="texto" class="materialize-textarea">{{a.texto}}</textarea>
+							       		<label for="texto">Digite seu Comentário</label>
+							       		<input type="hidden" id="noticia" name="noticia" value="{{noticia.id}}">
+							  			<button class="btn waves-effect waves-light" onclick="return validaComentario(this)" type="submit">Editar Comentário</button>
+							       	</div>
+						    	</div>
+							</form>
+					    </div>
+			        {% endif %}
 				    </p>
 			    </li>
 			</ul>
@@ -36,7 +57,7 @@
 	       		<textarea id="texto" name="texto" class="materialize-textarea"></textarea>
 	       		<label for="texto">Digite seu Comentário</label>
 	       		<input type="hidden" id="noticia" name="noticia" value="{{noticia.id}}">
-	  			<button class="btn waves-effect waves-light" type="submit">Comentar</button>
+	  			<button class="btn waves-effect waves-light" onclick="return validaComentario(this)" type="submit">Comentar</button>
 	       	</div>   	
 	  	</div>  	
 	</form>

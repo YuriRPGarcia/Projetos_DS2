@@ -1,0 +1,14 @@
+{% if session['tipo'] == 'leitor' or 'tipo' not in session %}
+	{% extends "base.html" %}
+{% else %}
+	{% extends "base_administracao.html" %}
+{% endif %}
+
+{% block title %} Pagina não encontrada {% endblock %}
+
+{% block content %}
+
+    <img class="responsive-img" src="/static/fotos/Kyle.png">
+    <h4>Bah cara que sad mas a pagina que tu ta procurando não existe :/</h4>
+
+{% endblock %}

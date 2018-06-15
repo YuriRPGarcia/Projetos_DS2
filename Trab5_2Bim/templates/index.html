@@ -1,7 +1,21 @@
-{% extends "base.html" %}
+{% if session['tipo'] == 'leitor' or 'tipo' not in session %}
+	{% extends "base.html" %}
+{% else %}
+	{% extends "base_administracao.html" %}
+{% endif %}
 
 {% block title %} Home {% endblock %}
 
 {% block content %}
+
+<blockquote>
+	<h4 style="display: inline;">Procure a Notícia por Assunto</h4>
+</blockquote>
+
+<div class="collection">
+   	{% for a in vetAssunto %}
+    	<a href="/noticia_assunto/{{a.id}}" class="collection-item">{{a.nome}}</a> 	
+	{% endfor %}
+</div>
 
 {% endblock %}
