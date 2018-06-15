@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<blockquote><h4>Cadastre-se</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/cadastrar_pessoa" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="login" type="text" name="login" required>
+              <label for="login">Insira Seu Login</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="nome" type="text" name="nome" required>
+              <label for="nome">Insira Seu Nome</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input id="senha" type="password" name="senha" onkeyup="check()" required>
+              <label for="senha">Insira Sua Senha</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="confirma_senha" type="password" name="confirma_senha" onkeyup="check()" required>
+              <label for="confirma_senha">Confirmar Senha</label>
+            </div>
+        </div>
+        <blockquote>
+           	<span id='message'></span>
+        </blockquote>
+        <button class="btn waves-effect waves-light" type="submit">Cadastrar</button>
+    </form>
+</div>
+<blockquote>
+    {{mensagem}}
+</blockquote>
+
+{% endblock %}

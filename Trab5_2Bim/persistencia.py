@@ -4,7 +4,7 @@ from modelo import *
 class Conexao:
 	
 	def abre(self):
-		self.conexao = psycopg2.connect("dbname= user=postgres password=postgres host=localhost")
+		self.conexao = psycopg2.connect("dbname=news user=postgres password=postgres host=localhost")
 		self.cursor = self.conexao.cursor()
 
 	def encerra(self):
@@ -107,14 +107,14 @@ class PessoaDAO:
 	def excluir(self, login):
 		conexaoObj = Conexao()
 		conexaoObj.abre()
-		conexaoObj.cursor.execute("DELETE FROM Pessoa WHERE login = %s", [login])
+		conexaoObj.cursor.execute("DELETE FROM Pessoa WHERE login = %s;", [login])
 		conexaoObj.conexao.commit()
 		conexaoObj.encerra()
 
 	def obter(self, login):
 		conexao = Conexao()
 		conexao.abre()
-		conexao.cursor.execute("SELECT * FROM Pessoa WHERE login = %s", [login])
+		conexao.cursor.execute("SELECT * FROM Pessoa WHERE login = %s;", [login])
 		a = conexao.cursor.fetchone()
 		pessoa = Pessoa(a[3], a[0], a[1], a[2])
 		conexao.encerra()
@@ -122,13 +122,31 @@ class PessoaDAO:
 
 class NoticiaDAO:
 
+	def procurar(self, busca):
+		conexao = Conexao()
+		conexao.abre()
+		conexao.cursor.execute("SELECT * FROM Noticia WHERE titulo ILIKE %s;", ['%'+busca+'%'])
+		vet = conexao.cursor.fetchall()
+		vetNoticia = []
+		for a in vet:
+			try:
+				assunto = AssuntoDAO().obter(a[5])
+			except TypeError:
+				assunto = Assunto()
+			vetNoticia.append(Noticia(a[1], a[2], a[3], a[4], assunto, a[0]))
+		conexao.encerra()
+		print (vetNoticia)
+		return vetNoticia	
+
 	def adicionar(self, noticia):
 		conexaoObj = Conexao()
 		conexaoObj.abre()
-		dados = [noticia.titulo, noticia.texto, noticia.data, noticia.assunto.id]
-		conexaoObj.cursor.execute("INSERT INTO Noticia (titulo, texto, data, foto,idAssunto) VALUES(%s, %s, %s, %s, %s);", dados)
+		dados = [noticia.titulo, noticia.texto, noticia.data, noticia.foto, noticia.assunto.id]
+		conexaoObj.cursor.execute("INSERT INTO Noticia (titulo, texto, data, foto,idAssunto) VALUES(%s, %s, %s, %s, %s) RETURNING id;", dados)
 		conexaoObj.conexao.commit()
+		id = conexaoObj.cursor.fetchone()[0]
 		conexaoObj.encerra()
+		return int(id)
 
 	def listar(self):
 		conexao = Conexao()
@@ -138,17 +156,17 @@ class NoticiaDAO:
 		vetNoticia = []
 		for a in vet:
 			try:
-				assunto = AssuntoDAO().obter(a[4])
+				assunto = AssuntoDAO().obter(a[5])
 			except TypeError:
 				assunto = Assunto()
-			vetNoticia.append(Noticia(a[5], a[0], a[1], a[2], a[3], assunto))
+			vetNoticia.append(Noticia(a[1], a[2], a[3], a[4], assunto, a[0]))
 		conexao.encerra()
 		return vetNoticia
 
 	def editar(self, noticia):
 		conexaoObj = Conexao()
 		conexaoObj.abre()
-		dados = [noticia.titulo, noticia.texto, noticia.data, noticia.assunto.id, noticia.id]
+		dados = [noticia.titulo, noticia.texto, noticia.data, noticia.foto, noticia.assunto.id, noticia.id]
 		conexaoObj.cursor.execute("UPDATE Noticia SET titulo = %s, texto = %s, data = %s, foto = %s, idAssunto = %s WHERE id = %s;", dados)
 		conexaoObj.conexao.commit()
 		conexaoObj.encerra()		
@@ -164,21 +182,22 @@ class NoticiaDAO:
 		conexao = Conexao()
 		conexao.abre()
 		conexao.cursor.execute("SELECT * FROM Noticia WHERE id = %s", [id])
+		a = conexao.cursor.fetchone()
 		try:
-			assunto = AssuntoDAO().obter(a[4])
+			assunto = AssuntoDAO().obter(a[5])
 		except TypeError:
 			assunto = Assunto()
-		noticia = Noticia(a[5], a[0], a[1], a[2], a[3], assunto)
+		noticia = Noticia(a[1], a[2], a[3], a[4], assunto, a[0])
 		conexao.encerra()
 		return noticia
 
-class Comentario:
+class ComentarioDAO:
 
 	def adicionar(self, comentario):
 		conexaoObj = Conexao()
 		conexaoObj.abre()
-		dados = [comentario.texto, comentario.data, comentario.noticia.id, comentario.leitor.id]
-		conexaoObj.cursor.execute("INSERT INTO Comentario (texto, data, idNoticia, idLeitor) VALUES(%s, %s, %s, %s);", dados)
+		dados = [comentario.texto, comentario.data, comentario.noticia.id, comentario.pessoa.login]
+		conexaoObj.cursor.execute("INSERT INTO Comentario (texto, data, idNoticia, loginPessoa) VALUES(%s, %s, %s, %s);", dados)
 		conexaoObj.conexao.commit()
 		conexaoObj.encerra()
 
@@ -187,19 +206,19 @@ class Comentario:
 		conexao.abre()
 		conexao.cursor.execute("SELECT * FROM Comentario")
 		vet = conexao.cursor.fetchall()
-		vetNoticia = []
+		vetComentario = []
 		for a in vet:
 			try:
-				noticia = NoticiaDAO().obter(a[2])
+				noticia = NoticiaDAO().obter(a[3])
 			except TypeError:
 				noticia = Noticia()
 			try:
-				pessoa = PessoaDAO().obter(a[3])
+				pessoa = PessoaDAO().obter(a[4])
 			except TypeError:
 				pessoa = Pessoa()
-			vetNoticia.append(Noticia(a[4], a[0], a[1], noticia, pessoa))
+			vetComentario.append(Comentario(a[1], a[2], noticia, pessoa, a[0]))
 		conexao.encerra()
-		return vetNoticia
+		return vetComentario
 
 	def editar(self, comentario):
 		conexaoObj = Conexao()
@@ -222,13 +241,13 @@ class Comentario:
 		conexao.cursor.execute("SELECT * FROM Comentario WHERE id = %s", [id])
 		a = conexao.cursor.fetchone()
 		try:
-			noticia = NoticiaDAO().obter(a[2])
+			noticia = NoticiaDAO().obter(a[3])
 		except TypeError:
 			noticia = Noticia()
 		try:
-			pessoa = PessoaDAO().obter(a[3])
+			pessoa = PessoaDAO().obter(a[4])
 		except TypeError:
 			pessoa = Pessoa()
-		noticia = Comentario(a[4], a[0], a[1], noticia, pessoa)
+		noticia = Comentario(Noticia(a[1], a[2], noticia, pessoa, a[0]))
 		conexao.encerra()
 		return noticia

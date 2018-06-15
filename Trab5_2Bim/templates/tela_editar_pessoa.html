@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<blockquote><h4>Editar minhas Informações</h4></blockquote>
+
+<div class="row">
+    <form class="col s12" action="/editar_pessoa" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="nome" type="text" name="nome" value="{{pessoa.nome}}" required>
+              <label for="nome">Editar Nome</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+              <input id="senha" type="password" name="senha" onkeyup="check()" required>
+              <label for="senha">Insira Sua Nova Senha</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="confirma_senha" type="password" name="confirma_senha" onkeyup="check()" required>
+              <label for="confirma_senha">Confirmar Nova Senha</label>
+            </div>
+        </div>
+        <blockquote>
+           	<span id='message'></span>
+        </blockquote>
+        <input type="hidden" name="login" value="{{pessoa.login}}">
+        <button class="btn waves-effect waves-light" type="submit">Editar</button>
+    </form>
+</div>
+<blockquote>
+    {{mensagem}}
+</blockquote>
+
+{% endblock %}

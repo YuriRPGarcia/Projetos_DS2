@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<div class="row">
+{% for a in vetNoticia %}
+	    <div class="col s12 m6">
+	      <div class="card">
+	        <div class="card-image">
+	          <img src="/static/fotos/{{a.foto}}">
+	        </div>
+	        <div class="card-content">
+	        	<span class="card-title">{{a.titulo}}</span>
+		          <p>Data de publicação: {{a.data}}</p>
+	        </div>
+	        <div class="card-action">
+	          <a href="/noticia/{{a.id}}">Ler Notícia Completa</a>
+	          	{% if 'admin' in session['tipo'] or 'jornalista' in session['tipo'] %}
+			        <a href="/administracao/excluir_noticia/{{a.id}}">Excluir Notícia</a>
+			        <a href="/administracao/tela_editar_noticia/{{a.id}}">Editar Notícia</a>
+		        {% endif %}
+	        </div>
+	      </div>
+	    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

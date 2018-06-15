@@ -4,6 +4,14 @@ CREATE TABLE Assunto(
 	CONSTRAINT AssuntoPK PRIMARY KEY (id)
 );
 
+CREATE TABLE Pessoa(
+	login VARCHAR(100),
+	senha VARCHAR(100),
+	nome VARCHAR(100),
+	tipo VARCHAR(10),
+	CONSTRAINT PessoaPK PRIMARY KEY (login)
+);
+
 CREATE TABLE Noticia(
 	id SERIAL,
 	titulo VARCHAR(1000),
@@ -21,20 +29,14 @@ CREATE TABLE Comentario(
 	texto VARCHAR(1000),
 	data DATE,
 	idNoticia INTEGER, 
-	loginPessoa INTEGER,
+	loginPessoa VARCHAR(100),
 	CONSTRAINT ComentarioPK PRIMARY KEY (id),
 	CONSTRAINT Comentario_NoticiaFK FOREIGN KEY (idNoticia) REFERENCES Noticia (id)
 										   ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT Comentario_LeitorFK FOREIGN KEY (login) REFERENCES Pessoa (login)
+	CONSTRAINT Comentario_LeitorFK FOREIGN KEY (loginPessoa) REFERENCES Pessoa (login)
 											ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE Pessoa(
-	login VARCHAR(100),
-	senha VARCHAR(100),
-	nome VARCHAR(100),
-	tipo VARCHAR(10) CHECK tipo = "leitor" OR tipo = "jornalista",
-	CONSTRAINT PessoaPK PRIMARY KEY (login)
-)
+
 
 

@@ -1,0 +1,28 @@
+{% extends "base_administracao.html" %}
+
+{% block title %} Home Administração {% endblock %}
+
+{% block content %}
+
+<blockquote>
+	<div class="row">
+	    <div class="input-field col s6">
+	    	<h4 style="display: inline;">Assuntos</h4>
+	    	<a class="waves-effect waves-light btn" id="mostraForm" name="mostraForm"><i class="material-icons">add</i></a>
+	    </div>
+    </div>
+	<form action="/administracao/cadastrar_assunto" method="post" enctype="multipart/form-data" name="formAssunto" id="formAssunto" style="display:none;">
+		<div class="row">
+	        <div class="input-field col s6">
+	          	<i class="material-icons prefix">chrome_reader_mode</i>
+	          	<input id="nome" type="text" class="validate" name="nome">
+	          	<label for="nome">Nome do Assunto</label>
+	        </div>
+	        <div class="input-field col s6">
+	        	<button class="btn waves-effect waves-light" type="submit">Cadastrar</button>
+	        </div>
+    	</div>
+	</form>
+</blockquote>
+
+{% endblock %}

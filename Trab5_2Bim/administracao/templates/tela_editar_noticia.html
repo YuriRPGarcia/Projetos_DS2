@@ -1,0 +1,55 @@
+{% extends "base_administracao.html" %}
+
+{% block title %} Editar Notícia {% endblock %}
+
+{% block content %}
+
+<div class="row">
+   	<form class="col s12" action="/administracao/editar_noticia" method="post" enctype="multipart/form-data">
+        <div class="row">
+           <div class="input-field col s12">
+              <select name="assunto">
+                <option value="" disabled>Escolha o Assunto</option>
+                {% for a in vetAssunto%}
+                  	{% if a.id == noticia.assunto.id %}
+                      <option value="{{a.id}}" selected>{{a.nome}}</option>
+                    {% endif %}
+                    <option value="{{a.id}}">{{a.nome}}</option>
+                {% endfor %}
+              </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="titulo" type="text" name="titulo" value="{{noticia.titulo}}" required>
+              <label for="titulo">Insira o Título da Notícia</label>
+            </div>
+        </div>
+       	<div class="row">
+	        <div class="input-field col s12">
+	        	<textarea id="texto" name="texto" class="materialize-textarea">{{noticia.texto}}</textarea>
+	          	<label for="texto">Texto da Notícia</label>
+	        </div>
+	    </div>
+        <div class="row">
+           <div class="input-field col s12">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Nova Foto da Notícia</span>
+                    <input type="file" id="foto" name="foto">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <blockquote>
+           	<span id='message'></span>
+        </blockquote>
+        <input type="hidden" name="id" value="{{noticia.id}}">
+        <button class="btn waves-effect waves-light" type="submit">Editar</button>
+    </form>
+</div>
+
+{% endblock %}

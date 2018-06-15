@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!-- Materialize JS -->
+    <script src="../static/materialize/js/materialize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="../static/js.js"></script>
+    <title>
+        {% block title %}
+        {% endblock %} 
+    </title>
+    {% endblock %}
+</head>
+<body>
+    <div id="nonFooter">
+
+    <div id="header">
+        <nav>
+            <div class="nav-wrapper black">
+                <a href="/" class="brand-logo">JN > Omelete</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/administracao/tela_cadastrar_noticia">Publique uma Notícia</a></li>
+                    {% if 'admin' in session['tipo']  %}
+                      <li><a href="/tela_cadastrar_pessoa">Cadastre um jornalista</a></li>
+                      <li><a href="/redireciona_perfil">Perfil</a></li>
+                    {% endif %}
+                    <li>
+                      <nav>
+                          <div class="nav-wrapper black">
+                              <form action="/procurar_noticias" method="post" enctype="multipart/form-data">
+                                <div class="input-field">
+                                    <input id="busca" type="search" name="busca" required>
+                                    <label class="label-icon" for="busca"><i class="material-icons">search</i></label>
+                                    <i class="material-icons">close</i>
+                                </div>
+                            </form>
+                          </div>
+                      </nav>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+
+    </div>
+    
+    <div id="footer">
+        <footer class="page-footer black">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Ninguém se importa com o rodapé</h5>
+                <p class="grey-text text-lighten-4">O rodapé é o Tom Bombadil da página web.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="/">Página Inicial</a></li>                  
+                  <li><a class="grey-text text-lighten-3" href="/tela_login">Login</a></li>
+                  <li><a class="grey-text text-lighten-3" href="/tela_cadastrar_aluno">Cadastre um Aluno</a></li>
+                  <li><a class="grey-text text-lighten-3" href="/tela_cadastrar_empresa">Cadastre uma Empresa</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © Copyright de cu é rola
+            </div>
+          </div>
+        </footer>       
+    </div>
+</body>
+</html>
