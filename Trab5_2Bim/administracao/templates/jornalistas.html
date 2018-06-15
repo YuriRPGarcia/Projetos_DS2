@@ -1,0 +1,20 @@
+{% extends "base_administracao.html" %}
+
+{% block title %} Lista de Jornalistas {% endblock %}
+
+{% block content %}
+
+<blockquote><h5 style="display: inline;">Lista de Jornalistas</h5><a class="waves-effect waves-light btn-small" onclick="window.location.href='/administracao/tela_cadastrar_pessoa'"><i class="material-icons">add</i></a></blockquote>
+
+<ul class="collection">
+	{% for a in vetPessoas%}
+	    <li class="collection-item avatar">
+	      <span class="title">{{a.login}}</span>
+	      <p>{{a.nome}}</p>
+	      <a href="/tela_editar_pessoa/{{a.login}}" style="color: lightseagreen">Editar</a>
+	      <a href="/excluir_pessoa/{{a.login}}" style="color: lightseagreen">Excluir</a>
+	    </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

@@ -24,5 +24,10 @@
     	</div>
 	</form>
 </blockquote>
+<div class="collection">
+   	{% for a in vetAssunto %}
+    	<a href="/noticia_assunto/{{a.id}}" class="collection-item">{{a.nome}}</a> 	
+	{% endfor %}
+</div>
 
 {% endblock %}

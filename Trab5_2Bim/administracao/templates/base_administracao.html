@@ -23,13 +23,13 @@
     <div id="header">
         <nav>
             <div class="nav-wrapper black">
-                <a href="/" class="brand-logo">JN > Omelete</a>
+                <a href="/administracao/" class="brand-logo">JN > Omelete</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="/logout">Logout</a></li>
                     <li><a href="/administracao/tela_cadastrar_noticia">Publique uma Notícia</a></li>
                     {% if 'admin' in session['tipo']  %}
                       <li><a href="/tela_cadastrar_pessoa">Cadastre um jornalista</a></li>
-                      <li><a href="/redireciona_perfil">Perfil</a></li>
+                      <li><a href="/administracao/jornalistas">Lista de Jornalista</a></li>
                     {% endif %}
                     <li>
                       <nav>
@@ -65,10 +65,7 @@
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Links</h5>
                 <ul>
-                  <li><a class="grey-text text-lighten-3" href="/">Página Inicial</a></li>                  
-                  <li><a class="grey-text text-lighten-3" href="/tela_login">Login</a></li>
-                  <li><a class="grey-text text-lighten-3" href="/tela_cadastrar_aluno">Cadastre um Aluno</a></li>
-                  <li><a class="grey-text text-lighten-3" href="/tela_cadastrar_empresa">Cadastre uma Empresa</a></li>
+                  <li><a class="grey-text text-lighten-3" href="/administracao/gerencia">Página Inicial</a></li>                  
                 </ul>
               </div>
             </div>
