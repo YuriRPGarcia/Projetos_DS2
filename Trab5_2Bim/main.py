@@ -14,11 +14,15 @@ def antes():
 	if ("/administracao/" in request.path):			
 		if (('login' not in session and 'senha' not in session) or session['tipo'] != 'admin' and session['tipo'] != 'jornalista'):
 			app.logger.warning("entrou no segundo...")
-			return "erro...faca login corretamente"
+			return redirect(url_for("admLogin"))
 
 @administracao.route('/')
 def gerencia():	
-    return render_template("gerencia.html")
+    return render_template("gerencia.html", vetAssunto = AssuntoDAO().listar())
+
+@administracao.route('/jornalistas')
+def jornalistas():	
+    return render_template("jornalistas.html", vetPessoas = PessoaDAO().listar("jornalista"))
 
 @administracao.route('/tela_cadastrar_noticia')
 def tela_cadastrar_noticia():
@@ -67,7 +71,7 @@ def editar_noticia():
 		else:
 			return render_template("tela_editar_noticia.html", mensagem = "formato de imagem nao suportado.")
 	noticiaDAO.editar(noticia)
-	return redirect(url_for("administracao.gerencia"))
+	return redirect(url_for("noticia", id = request.form['id']))
 
 @administracao.route('/excluir_noticia/<id>')
 def excluir_noticia(id):
@@ -102,7 +106,9 @@ def excluir_pessoa(id):
 	if session['tipo'] == "jornalista" or session['tipo'] == "admin":
 		assuntoDAO = AssuntoDAO()
 		assuntoDAO.excluir(id)
-	return redirect(url_for("administracao.gerencia"))
+		return redirect(url_for("administracao.gerencia"))
+	else:
+		return redirect(url_for("administracao.gerencia"))
 
 
 
@@ -119,6 +125,14 @@ def depois_da_rota(r):
     r.headers["Expires"] = "0"
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
+
+@app.route('/admLogin')
+def admLogin():
+	return render_template("admLogin.html")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 @app.route('/')
 def index():	
@@ -164,13 +178,22 @@ def editar_pessoa():
 	pessoa.nome = str(request.form['nome'])
 	pessoaDAO = PessoaDAO()
 	pessoaDAO.editar(pessoa)
-	return redirect(url_for("index"))
+	if session['login'] == "admin" :
+		return redirect(url_for("jornalistas"))
+	elif session['login'] == "jornalista":
+		return redirect(url_for("administracao.gerencia"))
+	else:
+		return redirect(url_for("index"))
 
 @app.route('/excluir_pessoa/<login>')
 def excluir_pessoa(login):
 	if login == session['login'] or session['tipo'] == "admin":
 		pessoaDAO = PessoaDAO()
 		pessoaDAO.excluir(login)
+	if session['login'] == "admin" :
+		return redirect(url_for("jornalistas"))
+	else:
+		return redirect(url_for("index"))
 		return redirect(url_for("logout"))
 
 @app.route('/comentar', methods=['POST'])
@@ -183,23 +206,26 @@ def comentar():
 		comentario.data = datetime.date.today()
 		comentarioDAO = ComentarioDAO()
 		comentarioDAO.adicionar(comentario)
-		return redirect(url_for("noticia['request.form['noticia']']"))
+		return redirect(url_for("noticia", id = request.form['noticia']))
 
 
 @app.route('/editar_comentario/<id>', methods=['POST'])
 def editar_comentario(id):
-	if session['login'] == NoticiaDAO().obter(request.form['noticia']) or session['tipo'] == "admin" or session['tipo'] == "jornalista":
-		comentario = ComentarioDAO().obter(id) 
+	comentario = ComentarioDAO().obter(id)
+	if session['login'] == comentario.pessoa.login or session['tipo'] == "admin" or session['tipo'] == "jornalista":
 		comentario.texto = str(request.form['texto'])
 		comentario.data = datetime.date.today()
 		comentarioDAO = ComentarioDAO()
 		comentarioDAO.editar(comentario)
+		return redirect(url_for("noticia", id = comentario.noticia.id))
 
 @app.route('/excluir_comentario/<id>')
 def excluir_comentario(id):
-	if session['login'] == NoticiaDAO().obter(request.form['noticia']) or session['tipo'] == "admin" or session['tipo'] == "jornalista":
+	comentario = ComentarioDAO().obter(id)
+	if session['login'] == comentario.pessoa.login or session['tipo'] == "admin" or session['tipo'] == "jornalista":
 		comentarioDAO = ComentarioDAO()
-		comentarioDAO.excluir(id) 
+		comentarioDAO.excluir(id)
+		return redirect(url_for("noticia", id = comentario.noticia.id))		 
 
 @app.route('/tela_login')
 def tela_login():	
@@ -249,6 +275,11 @@ def procurar_noticias():
 @app.route('/noticia/<id>')
 def noticia(id):
 	return render_template("noticia.html", noticia = NoticiaDAO().obter(id), vetComentario = ComentarioDAO().listar())
+
+@app.route('/noticia_assunto/<id>')
+def noticia_assunto(id):
+	return render_template("noticia_assunto.html", vetNoticia = NoticiaDAO().noticiaporAssunto(id))
+
 
 
 if __name__=='__main__':

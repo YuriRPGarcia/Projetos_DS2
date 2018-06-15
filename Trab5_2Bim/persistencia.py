@@ -68,14 +68,14 @@ class PessoaDAO:
 		if(tipo == "todos"):
 			conexao = Conexao()
 			conexao.abre()
-			conexao.cursor.execute("SELECT * FROM Pessoa")
+			conexao.cursor.execute("SELECT * FROM Pessoa WHERE tipo = %s")
 			vet = conexao.cursor.fetchall()
 			vetPessoa = []
 			for a in vet:
 				vetPessoa.append(Pessoa(a[3], a[0], a[1], a[2]))
 			conexao.encerra()
 			return vetPessoa
-		if(tipo == "leitor"):
+		if(tipo == "leitor" or tipo == "jornalista"):
 			conexao = Conexao()
 			conexao.abre()
 			conexao.cursor.execute("SELECT * FROM Pessoa WHERE tipo = %s", [tipo])
@@ -85,17 +85,7 @@ class PessoaDAO:
 				vetPessoa.append(Pessoa(a[3], a[0], a[1], a[2]))
 			conexao.encerra()
 			return vetPessoa
-		if(tipo == "jornalista"):
-			conexao = Conexao()
-			conexao.abre()
-			conexao.cursor.execute("SELECT * FROM Pessoa WHERE tipo = %s", [tipo])
-			vet = conexao.cursor.fetchall()
-			vetPessoa = []
-			for a in vet:
-				vetPessoa.append(Pessoa(a[3], a[0], a[1], a[2]))
-			conexao.encerra()
-			return vetPessoa
-
+		
 	def editar(self, pessoa):
 		conexaoObj = Conexao()
 		conexaoObj.abre()
@@ -121,6 +111,22 @@ class PessoaDAO:
 		return pessoa
 
 class NoticiaDAO:
+
+	def noticiaporAssunto(self, id):
+		conexao = Conexao()
+		conexao.abre()
+		conexao.cursor.execute("SELECT * FROM Noticia WHERE idAssunto = %s;", [id])
+		vet = conexao.cursor.fetchall()
+		vetNoticia = []
+		for a in vet:
+			try:
+				assunto = AssuntoDAO().obter(a[5])
+			except TypeError:
+				assunto = Assunto()
+			vetNoticia.append(Noticia(a[1], a[2], a[3], a[4], assunto, a[0]))
+		conexao.encerra()
+		print (vetNoticia)
+		return vetNoticia
 
 	def procurar(self, busca):
 		conexao = Conexao()
@@ -248,6 +254,6 @@ class ComentarioDAO:
 			pessoa = PessoaDAO().obter(a[4])
 		except TypeError:
 			pessoa = Pessoa()
-		noticia = Comentario(Noticia(a[1], a[2], noticia, pessoa, a[0]))
+		comentario = Comentario(a[1], a[2], noticia, pessoa, a[0])
 		conexao.encerra()
-		return noticia
+		return comentario
