@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html >
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!-- Materialize JS -->
+    <script src="../static/materialize/js/materialize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="../static/js.js"></script>
+    <title>
+        {% block title %}
+        {% endblock %} 
+    </title>
+    {% endblock %}
+</head>
+<body>
+    <div id="nonFooter">
+
+    <div id="header">
+        <nav>
+            <div class="nav-wrapper black">
+                <a href="/" class="brand-logo">Anotacao</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                  <li><a href="/tela_cadastrar_anotacao">Cadastrar Anotação</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Editar Anotacão {% endblock %}
+
+{% block content %}
+
+<div class="row">
+   	<form class="col s12" action="/editar_anotacao" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="titulo" type="text" name="titulo" value="{{anotacao.titulo}}" required>
+              <label for="titulo">Insira o Título da Anotacão</label>
+            </div>
+        </div>
+       	<div class="row">
+	        <div class="input-field col s12">
+	        	<textarea id="texto" name="texto" class="materialize-textarea">{{anotacao.texto}}</textarea>
+	          	<label for="texto">Novo Texto da Anotacão</label>
+	        </div>
+	    </div>
+        <div class="row">
+           <div class="input-field col s12">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Nova Foto da Anotacão</span>
+                    <input type="file" id="foto" name="foto">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <blockquote>
+           	<span id='message'></span>
+        </blockquote>
+        <input type="hidden" name="id" value="{{anotacao.id}}">
+        <button class="btn waves-effect waves-light" type="submit">Editar</button>
+    </form>
+</div>
+
+{% endblock %}
