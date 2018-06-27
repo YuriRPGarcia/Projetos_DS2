@@ -15,8 +15,9 @@ class Noticia:
 		self.id = id
 		self.foto = foto
 
-	def __repr__(self):
-		return str(self.id) + ";" + self.titulo + ";" + self.texto + ";" + str(self.data) + ";" + self.foto + ";" + str(self.assunto)
+	def obj2Str(self):
+		return str(self.id) + ";" + str(self.titulo)
+		
 
 class Pessoa:
 	def __init__(self, tipo = "", login = "", senha = "", nome = ""):

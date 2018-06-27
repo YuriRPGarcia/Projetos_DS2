@@ -38,13 +38,14 @@
                     <li>
                     	<nav>
           						    <div class="nav-wrapper black">
-          						      	<form action="/procurar_noticias" method="post" enctype="multipart/form-data">
+          						      	<form action="/procurar_noticias" autocomplete="off" method="post" enctype="multipart/form-data">
           						        	<div class="input-field">
-          						          		<input id="busca" type="search" name="busca" required>
+          						          		<input id="busca" type="search" name="busca" onkeyup="" required>
           						          		<label class="label-icon" for="busca"><i class="material-icons">search</i></label>
-          						          		<i class="material-icons">close</i>
+          						          		<i class="material-icons" onclick=" return fechaTudo()">close</i>
           						        	</div>
           						    	</form>
+                            <div class="collection" id="noticias"></div>
           						    </div>
           						</nav>
                 </ul>
@@ -63,8 +64,17 @@
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 class="white-text">Ninguém se importa com o rodapé</h5>
-                <p class="grey-text text-lighten-4">O rodapé é o Tom Bombadil da página web.</p>
+                <h5 class="white-text">JN > Omelete</h5>
+                <p class="grey-text text-lighten-4">Seu site de notícias do mundo do entretenimento.</p>
+                  <form class="col s12" method="post" action="">
+                    <div class="input-field col s12">
+                      <input id="email" name="email" type="email" class="validate" style="color: white">
+                      <label for="email" >Cadastre seu E-mail para receber as Notícias</label>
+                      <span class="helper-text" data-error="Inválido" data-success="">Helper text</span>
+                      <button class="btn waves-effect waves-light" onclick="return cadastraEmail()" type="submit">Cadastrar</button>
+                    </div>
+                  </form>
+                  <span id='message'></span>
               </div>
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Links</h5>
@@ -76,7 +86,7 @@
           </div>
           <div class="footer-copyright">
             <div class="container">
-            © Copyright de cu é rola
+            © Copyright
             </div>
           </div>
         </footer>       

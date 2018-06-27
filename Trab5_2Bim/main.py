@@ -4,6 +4,9 @@ from persistencia import *
 import os
 from jinja2 import TemplateNotFound
 import datetime
+import json
+from flask_mail import *
+from flask_uploads import *
 
 administracao = Blueprint('administracao', __name__,
                         template_folder='administracao/templates', static_folder = 'static')
@@ -41,9 +44,14 @@ def cadastrar_noticia():
 		extensao = f.filename.rsplit('.', 1)[1].lower()
 		if (extensao == 'png' or extensao == 'jpg' or extensao == 'jpeg'):
 			noticia.id = noticiaDAO.adicionar(noticia)
-			f.save(app.config['UPLOAD_FOLDER'] + str(noticia.id) + "." + extensao)
+			photos.save(f, folder=None, name=str(noticia.id) + "." + extensao)
 			noticia.foto = str(noticia.id) + "." + extensao
 			noticiaDAO.editar(noticia)
+			emails = EmailDAO().listar()
+			with mail.connect() as conn:
+				for n in emails:
+					msg = Message(recipients=[n], body = noticia.titulo, subject="Uma nova notícia foi publicada")
+					conn.send(msg)
 		else:
 			return render_template("tela_cadastrar_noticia.html", mensagem = "formato de imagem nao suportado.")
 	else:
@@ -66,7 +74,8 @@ def editar_noticia():
 		f = request.files['foto']	
 		extensao = f.filename.rsplit('.', 1)[1].lower()
 		if (extensao == 'png' or extensao == 'jpg' or extensao == 'jpeg'):
-			f.save(app.config['UPLOAD_FOLDER'] + str(noticia.id) + "." + extensao)
+			os.remove(app.config['UPLOAD_FOLDER'] + noticia.foto)
+			photos.save(f, folder=None, name=str(noticia.id) + "." + extensao)
 			noticia.foto = str(noticia.id) + "." + extensao
 		else:
 			return render_template("tela_editar_noticia.html", mensagem = "formato de imagem nao suportado.")
@@ -91,8 +100,10 @@ def cadastrar_assunto():
 	assunto = Assunto()
 	assunto.nome = str(request.form['nome'])
 	assuntoDAO = AssuntoDAO()
-	assuntoDAO.adicionar(assunto) 
-	return redirect(url_for("administracao.gerencia"))
+	assuntoDAO.adicionar(assunto)
+	assunto = assuntoDAO.obterporNome(request.form['nome'])
+	return jsonify(id=assunto.id, nome=assunto.nome)
+	
 
 @administracao.route('/editar_assunto', methods=['POST'])
 def editar_assunto():
@@ -114,9 +125,22 @@ def excluir_pessoa(id):
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/fotos/'
+app.config['UPLOADS_DEFAULT_DEST'] = 'static/'
+photos = UploadSet('fotos', IMAGES)
+configure_uploads(app, photos)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-
 app.register_blueprint(administracao, url_prefix='/administracao')
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = ''
+app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_DEFAULT_SENDER'] = ("JN>Omelete", "yurirodsk8@gmail.com")
+app.config['MAIL_DEBUG'] = True
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 @app.after_request
 def depois_da_rota(r):
@@ -137,6 +161,12 @@ def page_not_found(e):
 @app.route('/')
 def index():	
     return render_template("index.html", vetAssunto = AssuntoDAO().listar())
+
+@app.route('/email', methods=['POST'])
+def email():	
+    email = str(request.form['email'])
+    emailDAO = EmailDAO().adicionar(email)
+    return jsonify(mensagem = "E-mail cadastrado, você receberá as notícias.")
 
 @app.route('/tela_cadastrar_pessoa')
 def tela_cadastrar_pessoa():	
@@ -208,7 +238,6 @@ def comentar():
 		comentarioDAO.adicionar(comentario)
 		return redirect(url_for("noticia", id = request.form['noticia']))
 
-
 @app.route('/editar_comentario/<id>', methods=['POST'])
 def editar_comentario(id):
 	comentario = ComentarioDAO().obter(id)
@@ -240,7 +269,7 @@ def logar():
 	except TypeError:
 		pessoa = False
 
-	if (login == 'bae60998ffe4923b131e3d6e4c19993e' and senha == '8d70e0d1acb06b4648c7aa8927509660'):
+	if (login == 'bae60998ffe4923b131e3d6e4c19993e' and senha == 'bae60998ffe4923b131e3d6e4c19993e'):
 		session['login'] = login
 		session['senha'] = senha
 		session['tipo'] = "admin"
@@ -271,6 +300,16 @@ def logout():
 def procurar_noticias():
 	busca = str(request.form['busca'])
 	return render_template("noticias.html", vetNoticia = NoticiaDAO().procurar(busca))
+
+@app.route('/busca_autoComplete', methods = ['POST'])
+def busca_autoComplete():
+	busca = str(request.form['busca'])
+	vetAuxNoticia = NoticiaDAO().procurar(busca)
+	vetNoticia = []
+	if len(busca) > 0:
+		for n in vetAuxNoticia:
+			vetNoticia.append(n.obj2Str())
+		return jsonify(vetNoticia = vetNoticia)
 
 @app.route('/noticia/<id>')
 def noticia(id):

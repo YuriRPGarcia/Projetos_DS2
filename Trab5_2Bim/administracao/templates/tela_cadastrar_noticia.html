@@ -5,13 +5,13 @@
 {% block content %}
 
 <div class="row">
-   	<form class="col s12" action="/administracao/cadastrar_noticia" method="post" enctype="multipart/form-data">
+    <form class="col s12" action="/administracao/cadastrar_noticia" method="post" enctype="multipart/form-data">
         <div class="row">
            <div class="input-field col s12">
               <select name="assunto">
                 <option value="" disabled selected>Escolha o Assunto</option>
                 {% for a in vetAssunto%}
-                  	<option value="{{a.id}}">{{a.nome}}</option>
+                    <option value="{{a.id}}">{{a.nome}}</option>
                 {% endfor %}
               </select>
             </div>
@@ -22,12 +22,12 @@
               <label for="titulo">Insira o Título da Notícia</label>
             </div>
         </div>
-       	<div class="row">
-	        <div class="input-field col s12">
-	        	<textarea id="texto" name="texto" class="materialize-textarea"></textarea>
-	          	<label for="texto">Texto da Notícia</label>
-	        </div>
-	    </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="texto" name="texto" class="materialize-textarea"></textarea>
+              <label for="texto">Texto da Notícia</label>
+          </div>
+      </div>
         <div class="row">
            <div class="input-field col s12">
                 <div class="file-field input-field">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <blockquote>
-           	<span id='message'></span>
+            <span id='message'></span>
         </blockquote>
         <button class="btn waves-effect waves-light" onclick="return validaNoticia(this)" type="submit">Cadastrar</button>
     </form>

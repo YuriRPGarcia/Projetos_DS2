@@ -11,6 +11,26 @@ class Conexao:
 		self.conexao.close()
 		self.cursor.close()
 
+class EmailDAO:
+	
+	def adicionar(self, email):
+		conexaoObj = Conexao()
+		conexaoObj.abre()
+		conexaoObj.cursor.execute("INSERT INTO Email (email) VALUES(%s);", [email])
+		conexaoObj.conexao.commit()
+		conexaoObj.encerra()
+	
+	def listar(self):
+		conexao = Conexao()
+		conexao.abre()
+		conexao.cursor.execute("SELECT * FROM Email")
+		vet = conexao.cursor.fetchall()
+		vetEmails = []
+		for a in vet:
+			vetEmails.append(a[0])
+		conexao.encerra()
+		return vetEmails		
+
 class AssuntoDAO:
 	
 	def adicionar(self, assunto):
@@ -49,6 +69,15 @@ class AssuntoDAO:
 		conexao = Conexao()
 		conexao.abre()
 		conexao.cursor.execute("SELECT * FROM Assunto WHERE id = %s", [id])
+		a = conexao.cursor.fetchone()
+		assunto = Assunto(a[1], a[0])
+		conexao.encerra()
+		return assunto
+
+	def obterporNome(self, nome):
+		conexao = Conexao()
+		conexao.abre()
+		conexao.cursor.execute("SELECT * FROM Assunto WHERE nome = %s", [nome])
 		a = conexao.cursor.fetchone()
 		assunto = Assunto(a[1], a[0])
 		conexao.encerra()

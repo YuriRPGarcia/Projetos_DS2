@@ -11,7 +11,7 @@
 	    	<a class="waves-effect waves-light btn" id="mostraForm" name="mostraForm"><i class="material-icons">add</i></a>
 	    </div>
     </div>
-	<form action="/administracao/cadastrar_assunto" method="post" enctype="multipart/form-data" name="formAssunto" id="formAssunto" style="display:none;">
+	<form action="" method="post" enctype="multipart/form-data" name="formAssunto" id="formAssunto" style="display:none;">
 		<div class="row">
 	        <div class="input-field col s6">
 	          	<i class="material-icons prefix">chrome_reader_mode</i>
@@ -19,12 +19,12 @@
 	          	<label for="nome">Nome do Assunto</label>
 	        </div>
 	        <div class="input-field col s6">
-	        	<button class="btn waves-effect waves-light" type="submit">Cadastrar</button>
+	        	<button class="btn waves-effect waves-light" onclick="return loadAssunto()" type="submit">Cadastrar</button>
 	        </div>
     	</div>
 	</form>
 </blockquote>
-<div class="collection">
+<div class="collection" id="assuntos">
    	{% for a in vetAssunto %}
     	<a href="/noticia_assunto/{{a.id}}" class="collection-item">{{a.nome}}</a> 	
 	{% endfor %}

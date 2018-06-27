@@ -1,3 +1,7 @@
+CREATE TABLE Email(
+	Email VARCHAR(100) UNIQUE
+);
+
 CREATE TABLE Assunto(
 	id SERIAL,
 	nome VARCHAR(100),

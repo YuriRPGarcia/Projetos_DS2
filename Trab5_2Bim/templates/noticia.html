@@ -51,16 +51,18 @@
 			</ul>
 		{% endif %}
 	{% endfor %}
-	<form class="col s6" action="/comentar" method="post" enctype="multipart/form-data">
-		<div class="row">
-	       	<div class="input-field col s12">
-	       		<textarea id="texto" name="texto" class="materialize-textarea"></textarea>
-	       		<label for="texto">Digite seu Comentário</label>
-	       		<input type="hidden" id="noticia" name="noticia" value="{{noticia.id}}">
-	  			<button class="btn waves-effect waves-light" onclick="return validaComentario(this)" type="submit">Comentar</button>
-	       	</div>   	
-	  	</div>  	
-	</form>
+	{% if session['login'] and 'leitor' in session['tipo'] %}
+		<form class="col s6" action="/comentar" method="post" enctype="multipart/form-data">
+			<div class="row">
+		       	<div class="input-field col s12">
+		       		<textarea id="texto" name="texto" class="materialize-textarea"></textarea>
+		       		<label for="texto">Digite seu Comentário</label>
+		       		<input type="hidden" id="noticia" name="noticia" value="{{noticia.id}}">
+		  			<button class="btn waves-effect waves-light" onclick="return validaComentario(this)" type="submit">Comentar</button>
+		       	</div>   	
+		  	</div>  	
+		</form>
+	{% endif %}
 </div>
 
 {% endblock %}
