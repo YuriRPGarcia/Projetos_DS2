@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} Cadastrar Anotacão {% endblock %}
+
+{% block content %}
+
+<div class="row">
+   	<form class="col s12" action="/cadastrar_anotacao" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="titulo" type="text" name="titulo" required>
+              <label for="titulo">Insira o Título da Anotacão</label>
+            </div>
+        </div>
+       	<div class="row">
+	        <div class="input-field col s12">
+	        	<textarea id="texto" name="texto" class="materialize-textarea"></textarea>
+	          	<label for="texto">Texto da Anotacão</label>
+	        </div>
+	    </div>
+        <div class="row">
+           <div class="input-field col s12">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Escolha a Foto da Anotacão</span>
+                    <input type="file" id="foto" name="foto">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <blockquote>
+           	<span id='message'></span>
+        </blockquote>
+        <button class="btn waves-effect waves-light" type="submit">Cadastrar</button>
+    </form>
+</div>
+
+{% endblock %}
