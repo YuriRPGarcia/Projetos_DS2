@@ -1,0 +1,7 @@
+CREATE TABLE Anotacao(
+	id SERIAL,
+	titulo VARCHAR(100),
+	texto VARCHAR(500),
+	foto VARCHAR(500),
+	CONSTRAINT AnotacaoPK PRIMARY KEY (id)
+);
